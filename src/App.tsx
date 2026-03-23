@@ -231,7 +231,7 @@ const Navbar = () => {
 const HERO_SLIDES = [
   {
     src: '/hero/heropic.jpg',
-    video: 'https://player.vimeo.com/external/517614051.hd.mp4?s=1d97356c9a759685e13d7e7932c0d51ef77f10b7&profile_id=174',
+    video: 'https://assets.mixkit.co/videos/preview/mixkit-car-washing-in-a-self-service-car-wash-48419-large.mp4',
     alt: 'Premium car detailing foam wash cinematic',
   },
   {
@@ -240,7 +240,7 @@ const HERO_SLIDES = [
   },
   {
     src: '/hero/hero3.jpg',
-    video: 'https://player.vimeo.com/external/510850877.hd.mp4?s=d5e9ed9ea40ba755e28512cce29ad3caf56007ec&profile_id=174',
+    video: 'https://assets.mixkit.co/videos/preview/mixkit-man-polishing-a-black-car-48421-large.mp4',
     alt: 'Premium luxury car detailing results',
   },
   {
