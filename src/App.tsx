@@ -1137,6 +1137,23 @@ const Pricing = () => {
   const [selectedService, setSelectedService] = useState<any>(null);
   const [openCategories, setOpenCategories] = useState<number[]>([0]);
 
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const categoryId = hash.replace('#', '');
+        const categoryIdx = BUSINESS_CONFIG.serviceCategories.findIndex((cat: any) => cat.id === categoryId);
+        if (categoryIdx !== -1) {
+          setOpenCategories(prev => prev.includes(categoryIdx) ? prev : [...prev, categoryIdx]);
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange(); // Check on mount
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   const classes = ["Klasa 1", "Klasa 2", "Klasa 3", "Klasa 4"];
 
   const toggleCategory = (idx: number) => {
