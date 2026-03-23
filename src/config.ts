@@ -22,7 +22,7 @@ export const BUSINESS_CONFIG = {
       {
         name: "Paulin Detailing Studio",
         address: "Slavka Rodića 1, Novi Sad, Srbija",
-        mapUrl: "https://www.google.com/maps/dir//45.2355833,19.7884167/@45.2355833,19.7884167,14z"
+        mapUrl: "https://www.google.com/maps/place/Paulin+detailing/@45.2356256,19.7859004,794m/data=!3m2!1e3!4b1!4m6!3m5!1s0x475b0f72249a993f:0xfaaade3878a61d1b!8m2!3d45.2356219!4d19.7884753!16s%2Fg%2F11x31v392_?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D"
       }
     ],
     workingHours: "Po dogovoru / Zakazivanje obavezno",

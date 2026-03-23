@@ -76,7 +76,7 @@ const Navbar = () => {
           <img 
             src={BUSINESS_CONFIG.logo} 
             alt={BUSINESS_CONFIG.name} 
-            className="h-8 w-auto object-contain" 
+            className="h-6 md:h-8 w-auto object-contain" 
           />
         </a>
 
@@ -571,14 +571,15 @@ const Services = () => {
           {BUSINESS_CONFIG.services.map((service, idx) => {
             const Icon = [Droplets, Sparkles, Shield, Car, Star, Clock][idx] || Sparkles;
             return (
-              <motion.div 
+              <motion.a 
+                href={`#${(service as any).targetId}`}
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 whileHover={{ y: -10 }}
-                className="bg-surface/50 border border-white/5 p-8 rounded-2xl hover:border-primary/50 transition-all group relative overflow-hidden"
+                className="bg-surface/50 border border-white/5 p-8 rounded-2xl hover:border-primary/50 transition-all group relative overflow-hidden block"
               >
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
                   <Icon size={80} />
@@ -588,13 +589,12 @@ const Services = () => {
                 </div>
                 <h3 className="text-xl font-black uppercase italic mb-4 tracking-tight">{service.title}</h3>
                 <p className="text-white/60 text-sm mb-6 leading-relaxed">{service.description}</p>
-                <a 
-                  href={`#${(service as any).targetId}`}
+                <div 
                   className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-white/90 group-hover:text-primary active:opacity-70 transition-colors"
                 >
                   Saznaj više <ChevronRight className="w-4 h-4" aria-hidden="true" />
-                </a>
-              </motion.div>
+                </div>
+              </motion.a>
             );
           })}
         </div>
