@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion, useMotionValue, useSpring } from 'motion/react';
 import { 
   Settings, 
   Wrench,
   Cpu,
-  Shield, 
-  Car, 
-  Clock, 
-  CheckCircle2, 
-  ArrowRight, 
-  Star, 
-  Phone, 
-  MapPin, 
-  Mail, 
-  Instagram, 
-  Facebook, 
+  Shield,
+  Car,
+  Clock,
+  CheckCircle2,
+  ArrowRight,
+  Star,
+  Phone,
+  MapPin,
+  Mail,
+  Instagram,
+  Facebook,
   Twitter,
   Menu,
   X,
@@ -28,24 +28,19 @@ import {
   MessageCircle,
   Sparkles,
   Zap,
+  Check, // Added based on user's provided snippet
+  MessageSquare, // Added based on user's provided snippet
+  Play, // Added based on user's provided snippet
+  Volume2, // Added based on user's provided snippet
+  VolumeX, // Added based on user's provided snippet
+  Calendar, // Added based on user's provided snippet
+  ExternalLink // Added based on user's provided snippet
 } from 'lucide-react';
 import { BUSINESS_CONFIG } from './config';
 
 // --- Components ---
 
-/** Announcement bar — urgency + click-to-call. Top detailing sites see 15-30% more bookings with this element. */
-const AnnouncementBar = () => (
-  <div className="bg-primary text-white py-2.5 px-4 text-center text-xs font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-4 flex-wrap">
-    <span>🛠️ Ograničen broj termina — Zakaži servis na vreme i osiguraj vrhunske performanse</span>
-    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-      {BUSINESS_CONFIG.contact.phones.map((phone, idx) => (
-        <a key={idx} href={`tel:${phone}`} className="underline underline-offset-2 hover:no-underline whitespace-nowrap active:opacity-70 transition-opacity" aria-label={`Pozovi nas ${idx + 1}`}>
-          {phone}
-        </a>
-      ))}
-    </div>
-  </div>
-);
+// AnnouncementBar removed for cleaner UI
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -85,7 +80,7 @@ const Navbar = () => {
           <img 
             src={BUSINESS_CONFIG.logo} 
             alt={BUSINESS_CONFIG.name} 
-            className="h-6 md:h-8 w-auto object-contain" 
+            className="h-8 md:h-11 w-auto object-contain" 
           />
         </a>
 
@@ -163,7 +158,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-secondary border-t border-white/10 p-6 md:hidden"
+            className="absolute top-full left-0 right-0 bg-secondary/95 backdrop-blur-xl border-t border-white/10 p-6 md:hidden shadow-2xl"
             role="menu"
           >
             <div className="flex flex-col gap-4 items-center text-center">
@@ -253,7 +248,35 @@ const HERO_SLIDES = [
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [highlight, setHighlight] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+
+  // Mouse tracking for magnetic effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 20, stiffness: 150 };
+  const magneticX = useSpring(mouseX, springConfig);
+  const magneticY = useSpring(mouseY, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY, currentTarget } = e;
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const x = (clientX - (left + width / 2)) * 0.35;
+    const y = (clientY - (top + height / 2)) * 0.35;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const resetMouse = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  useEffect(() => {
+    const highlightTimer = setInterval(() => setHighlight(h => !h), 3000);
+    return () => clearInterval(highlightTimer);
+  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion) return;
@@ -267,7 +290,7 @@ const Hero = () => {
 
   return (
     <section 
-      className="relative min-h-screen flex items-center overflow-hidden" 
+      className="relative min-h-screen flex items-center overflow-hidden pb-20 md:pb-0" 
       style={{ minHeight: '100svh' }}
     >
       {/* Cinematic Background */}
@@ -310,11 +333,15 @@ const Hero = () => {
         >
           <div className="flex items-center justify-center md:justify-start gap-2 mb-6 md:mb-8">
             <div className="h-0.5 w-8 bg-primary hidden md:block" />
-            <span className="text-primary font-black tracking-[0.4em] text-[10px] md:text-xs uppercase text-center md:text-left">Detailing studio Novi Sad</span>
+            <span className="text-primary font-black tracking-[0.4em] text-[10px] md:text-xs uppercase text-center md:text-left">Detailing studio Dorćol</span>
             <div className="h-0.5 w-12 bg-primary hidden md:block" />
           </div>
-          <h1 className="text-4xl md:text-8xl font-black leading-[0.85] mb-6 md:mb-10 tracking-tighter uppercase italic text-balance" dangerouslySetInnerHTML={{ __html: BUSINESS_CONFIG.tagline.replace(". ", ". <br className='hidden md:block'/>") }} />
-          <p className="text-sm md:text-xl text-zinc-400 mb-8 md:mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed text-balance">
+          <h1 className="text-4xl md:text-[5.5rem] font-black leading-[0.85] mb-6 md:mb-8 tracking-tighter uppercase italic text-balance">
+            <motion.span animate={{ color: highlight ? 'var(--color-primary)' : '#ffffff' }} transition={{ duration: 0.8 }}>Vrhunski Detailing</motion.span> <br />
+            za Vaš Automobil <br />
+            <motion.span animate={{ color: !highlight ? 'var(--color-primary)' : '#ffffff' }} transition={{ duration: 0.8 }}>u Srcu Beograda</motion.span>.
+          </h1>
+          <p className="text-xs md:text-lg text-zinc-400 mb-8 md:mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed text-balance">
             {BUSINESS_CONFIG.shortDescription}
           </p>
 
@@ -323,46 +350,39 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="flex flex-col sm:flex-row items-center gap-4 mb-10 bg-white/5 backdrop-blur-md border border-white/10 p-2 pl-4 pr-6 rounded-full w-fit mx-auto md:mx-0"
+            className="flex items-center gap-3 mb-10 bg-white/5 backdrop-blur-md border border-white/10 p-1.5 pl-3 pr-4 rounded-full w-fit mx-auto md:mx-0 shadow-2xl"
           >
-            <div className="flex items-center gap-3">
-              <div className="flex -space-x-2" aria-hidden="true">
-                {[
-                  "https://i.pravatar.cc/100?u=1",
-                  "https://i.pravatar.cc/100?u=2",
-                  "https://i.pravatar.cc/100?u=3",
-                  "https://i.pravatar.cc/100?u=4",
-                ].map((url, i) => (
-                  <img 
-                    key={i} 
-                    src={url} 
-                    alt="Klijent" 
-                    className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-zinc-950 object-cover" 
-                  />
-                ))}
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-2 border-zinc-950 flex items-center justify-center text-[10px] md:text-xs font-black text-zinc-950">
-                  +500
-                </div>
-              </div>
-              <div className="h-8 w-[1px] bg-white/10 hidden sm:block" />
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+              <Star className="w-4 h-4 fill-secondary text-secondary" />
             </div>
-            <div className="flex flex-col items-center sm:items-start gap-0.5">
-              <div className="flex gap-0.5" aria-hidden="true">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-3 md:w-3.5 h-3 md:h-3.5 fill-primary text-primary" />)}
+            <div className="h-6 w-[1px] bg-white/10" />
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-black tracking-tight text-white">5.0</span>
+                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Google Rating</span>
               </div>
-              <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/90">
-                5.0 na Google-u od 20 verifikovanih recenzija
+              <p className="text-[10px] font-black text-primary uppercase tracking-[0.15em] leading-tight">
+                27+ Verifikovanih recenzija
               </p>
             </div>
           </motion.div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-6 w-full md:w-auto">
-            <a 
+          <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-6 w-full md:w-auto mb-12 md:mb-0">
+            <motion.a 
               href="#contact"
-              className="w-full md:w-auto md:h-16 bg-primary hover:bg-primary/90 active:scale-95 text-white px-10 py-4 md:py-0 rounded-[2rem] md:rounded-[2.5rem] font-black tracking-[0.2em] uppercase text-sm transition-all transform hover:scale-105 flex items-center justify-center gap-3 shadow-xl shadow-primary/20"
+              style={{ x: magneticX, y: magneticY }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={resetMouse}
+              className="w-full md:w-auto md:h-16 bg-primary hover:bg-primary/90 active:scale-95 text-white px-10 py-4 md:py-0 rounded-[2rem] md:rounded-[2.5rem] font-black tracking-[0.2em] uppercase text-sm transition-all transform hover:scale-105 flex items-center justify-center gap-3 shadow-xl shadow-primary/20 relative overflow-hidden group"
             >
-              ZAKAŽI TERMIN <ArrowRight className="w-5 h-5 text-white" aria-hidden="true" />
-            </a>
+              <span className="relative z-10 flex items-center gap-3">
+                ZAKAŽI TERMIN <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+              </span>
+              <motion.div 
+                className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                initial={false}
+              />
+            </motion.a>
             
             <div className="flex flex-col gap-2 w-full md:w-auto">
               {BUSINESS_CONFIG.contact.phones.map((phone, idx) => (
@@ -459,7 +479,8 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
+      <div id="about" className="scroll-mt-26"></div>
 
       {/* ── PART 1: Mission Statement Banner ── */}
       <div className="bg-primary py-16 relative overflow-hidden">
@@ -496,8 +517,8 @@ const About = () => {
           >
             <div className="aspect-[4/5] rounded-2xl overflow-hidden relative z-10 border border-white/10 shadow-2xl">
               <img
-                src="/about/nasaprica.jpg"
-                alt="Naša priča - Paulin Detailing tim u radu"
+                src="/images/about/nasaprica.jpg"
+                alt="Naša priča - Auto Detailing Dorćol tim u radu"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -525,7 +546,7 @@ const About = () => {
             </div>
             <h2 className="text-5xl md:text-6xl font-black mb-8 tracking-tighter uppercase italic leading-tight">
               Obezbedite Vašem automobilu <br />
-              <span className="text-primary">najbolji detailing u Novom Sadu.</span>
+              <span className="text-primary">najbolji detailing u Beogradu.</span>
             </h2>
             <p className="text-white/60 text-lg mb-6 leading-relaxed">
               {BUSINESS_CONFIG.longDescription}
@@ -644,7 +665,8 @@ const Services = () => {
 
 
   return (
-    <section id="services" className="py-24 bg-secondary">
+    <section className="py-24 bg-secondary">
+      <div id="services" className="scroll-mt-26"></div>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
           <div className="flex items-center justify-center gap-2 mb-6">
@@ -661,7 +683,7 @@ const Services = () => {
             const Icon = [Droplets, Sparkles, Shield, Car, Star, Clock][idx] || Sparkles;
             return (
               <motion.a 
-                href={`#${(service as any).targetId}`}
+                href="#price-list"
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -863,21 +885,26 @@ const Gallery = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const images = [
-    "/gallery/5-5.jpg",
-    "/gallery/6-6.jpg",
-    "/gallery/7-7.jpg",
-    "/gallery/8-8.jpg",
+    "/images/gallery/gallery-1.jpg",
+    "/images/gallery/gallery-2.jpg",
+    "/images/gallery/gallery-3.jpg",
+    "/images/gallery/gallery-4.jpg",
+    "/images/gallery/gallery-5.jpg",
+    "/images/gallery/gallery-6.jpg",
   ];
 
   const galleryLabels = [
-    "Sigurnost koja traje",
-    "Servis i održavanje premijum vozila",
-    "Specijalizovani radovi na motoru",
-    "Održavanje automatskih menjača",
+    "Premium detailing proces",
+    "Dubinsko čišćenje točkova",
+    "Sjaj nakon poliranja",
+    "Kozmetička priprema",
+    "Zaštita i nega",
+    "Kvalitet bez kompromisa",
   ];
 
   return (
-    <section id="gallery" className="py-24">
+    <section className="py-24">
+      <div id="gallery" className="scroll-mt-26"></div>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-8 text-center md:text-left">
           <div className="max-w-xl flex flex-col items-center md:items-start">
@@ -895,19 +922,7 @@ const Gallery = () => {
             Pogledaj sve projekte
           </button>
         </div>
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Featured Sliders */}
-          <BeforeAfterSlider 
-            before="/preiposle/headlight_pre.jpg" 
-            after="/preiposle/headlight_posle.jpg" 
-            label="Restauracija farova"
-          />
-          <BeforeAfterSlider 
-            before="/preiposle/engine_pre.jpg" 
-            after="/preiposle/engine_posle.jpg" 
-            label="Detailing motornog prostora"
-          />
-
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Standard Gallery */}
           {images.map((img, idx) => (
             <motion.div
@@ -980,7 +995,7 @@ const Testimonials = () => {
               <Star className="w-3 h-3 md:w-4 md:h-4 fill-primary text-primary" /> 
             </span>
             <span>·</span>
-            <span>od 20 verifikovanih recenzija</span>
+            <span>od 27 verifikovanih recenzija</span>
           </p>
         </div>
 
@@ -1022,7 +1037,7 @@ const Testimonials = () => {
           </div>
           <div className="flex items-center gap-3 bg-surface border border-white/5 px-8 py-4 rounded-full">
             <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="text-sm font-black tracking-tight">20 <span className="text-white/60 font-normal">Verifikovanih recenzija</span></span>
+            <span className="text-sm font-black tracking-tight">27 <span className="text-white/60 font-normal">Verifikovanih recenzija</span></span>
           </div>
           <div className="flex items-center gap-3 bg-surface border border-white/5 px-8 py-4 rounded-full">
             <Shield className="w-5 h-5 text-primary" aria-hidden="true" />
@@ -1145,46 +1160,14 @@ const ServiceModal = ({ service, onClose, currentClass }: { service: any, onClos
 };
 
 const Pricing = () => {
-  const [vehicleClass, setVehicleClass] = useState(0); // 0: Klasa 1, 1: Klasa 2, etc.
+  const [vehicleClass, setVehicleClass] = useState(0); // 0: Manji auto, 1: Limuzina, 2: SUV/Džip
   const [selectedService, setSelectedService] = useState<any>(null);
-  const [openCategories, setOpenCategories] = useState<number[]>([0]);
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash && hash.startsWith('#cat-')) {
-        const categoryId = hash.replace('#', '');
-        const categoryIdx = BUSINESS_CONFIG.serviceCategories.findIndex((cat: any) => cat.id === categoryId);
-        
-        if (categoryIdx !== -1) {
-          setOpenCategories(prev => prev.includes(categoryIdx) ? prev : [...prev, categoryIdx]);
-          
-          // Wait for accordion to start opening, then force scroll
-          setTimeout(() => {
-            const element = document.getElementById(categoryId);
-            if (element) {
-              element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          }, 100);
-        }
-      }
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); // Check on mount
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  const classes = ["Klasa 1", "Klasa 2", "Klasa 3", "Klasa 4"];
-
-  const toggleCategory = (idx: number) => {
-    setOpenCategories(prev => 
-      prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
-    );
-  };
+  const classes = ["Manji auto", "Limuzina", "SUV/Džip"];
 
   return (
-    <section id="packages" className="py-24 bg-secondary relative overflow-hidden">
+    <section className="py-24 bg-secondary relative overflow-hidden">
+      <div id="packages" className="scroll-mt-26"></div>
       {/* Decorative background element */}
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] -z-10" />
       
@@ -1219,10 +1202,26 @@ const Pricing = () => {
               <p className={`text-[10px] font-bold uppercase tracking-widest mb-4 flex items-center gap-2 ${plan.recommended ? 'text-white/60' : 'text-white/50'}`}>
                 <Clock className="w-3 h-3" /> {plan.duration}
               </p>
-              <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-6xl font-black tracking-tighter">{plan.price}</span>
-                <span className="text-2xl font-black ml-1">{plan.currency}</span>
+              
+              <div className="mb-8 h-20 flex flex-col justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={vehicleClass}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-6xl font-black tracking-tighter tabular-nums">
+                        {plan.prices ? plan.prices[vehicleClass].toLocaleString() : plan.price}
+                      </span>
+                      <span className="text-2xl font-black ml-1 uppercase">{plan.currency}</span>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
+
               <ul className="space-y-4 mb-10">
                 {plan.items.map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm font-medium">
@@ -1235,7 +1234,7 @@ const Pricing = () => {
                 href="#contact"
                 className={`w-full py-4 rounded-xl font-black tracking-widest uppercase text-sm flex items-center justify-center transition-all active:scale-95 ${plan.recommended ? 'bg-white text-primary hover:bg-zinc-100 shadow-lg' : 'bg-primary text-white hover:bg-primary/90'}`}
               >
-                Zakaži Tretman
+                Zakaži Paket
               </a>
             </motion.div>
           ))}
@@ -1269,7 +1268,7 @@ const Pricing = () => {
         </div>
 
         {/* Detailed Table Section */}
-        <div className="mt-32" id="price-list">
+        <div className="mt-26 scroll-mt-26" id="price-list">
           <div className="text-center mb-16">
             <div className="flex items-center justify-center gap-2 mb-6">
               <div className="h-1 w-12 bg-primary" />
@@ -1297,93 +1296,62 @@ const Pricing = () => {
             <p className="mt-6 text-white/50 text-[10px] font-bold uppercase tracking-[0.2em]">Odaberite klasu vašeg vozila za tačan prikaz cena</p>
           </div>
 
-          <div className="space-y-6">
-            {BUSINESS_CONFIG.serviceCategories.map((category, catIdx) => {
-              const isOpen = openCategories.includes(catIdx);
-              return (
-                <div key={catIdx} className="relative bg-surface/20 rounded-[2rem] border border-white/5 overflow-hidden transition-all duration-300 hover:border-white/10">
-                  <button 
-                    onClick={() => toggleCategory(catIdx)}
-                    className="w-full text-left px-8 py-8 flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-6">
-                      <div className={`w-1.5 h-12 bg-primary transition-all duration-500 ${isOpen ? 'scale-y-100' : 'scale-y-0 opacity-20'}`} />
-                      <h3 
-                        id={(category as any).id} 
-                        className="text-2xl md:text-3xl font-black uppercase italic tracking-tight transition-colors group-hover:text-primary scroll-mt-24 md:scroll-mt-32"
-                      >
-                        {category.title}
-                      </h3>
-                    </div>
-                    <div className={`p-3 rounded-full border border-white/10 transition-all duration-500 ${isOpen ? 'rotate-180 bg-primary border-primary text-white' : 'text-white/50 group-hover:text-white group-hover:border-white/20'}`}>
-                      <ChevronDown className="w-6 h-6" />
-                    </div>
-                  </button>
-                  
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div 
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-8 pb-8">
-                          <div className="overflow-x-auto rounded-3xl border border-white/5 bg-secondary/50 backdrop-blur-sm">
-                            <table className="w-full text-left border-collapse md:min-w-[600px]">
-                              <thead className="hidden md:table-header-group">
-                                <tr className="border-bottom border-white/5 bg-white/5">
-                                  <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-primary">Usluga</th>
-                                  <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-primary hidden md:table-cell">Opis</th>
-                                  <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-primary text-right hidden md:table-cell">Cena</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-white/5">
-                                {category.services.map((service, sIdx) => (
-                                  <tr 
-                                    key={sIdx} 
-                                    onClick={() => setSelectedService(service)}
-                                    className="hover:bg-white/[0.05] cursor-pointer transition-all group border-b border-white/5 last:border-0"
-                                  >
-                                    <td className="px-8 py-6">
-                                      <div className="flex items-center justify-between gap-4">
-                                        <div className="flex flex-col">
-                                          <span className="text-lg md:text-base font-black text-white/90 group-hover:text-white transition-colors tracking-tight leading-tight mb-2 md:mb-1">{service.name}</span>
-                                          <div className="flex items-center gap-1.5">
-                                            <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em] group-hover:underline">Detaljnije</span>
-                                            <ArrowRight className="w-3 h-3 text-primary transition-transform group-hover:translate-x-1" />
-                                          </div>
-                                        </div>
-                                        <div className="md:hidden w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:border-primary group-hover:shadow-primary-glow transition-all duration-300">
-                                          <ChevronRight className="w-5 h-5 text-primary group-hover:text-white" />
-                                        </div>
-                                      </div>
-                                    </td>
-                                    <td className="px-8 py-6 text-sm text-white/60 leading-relaxed max-w-xs hidden md:table-cell">{service.desc}</td>
-                                    <td className="px-8 py-6 text-right hidden md:table-cell">
-                                      <span className="text-xl font-black tracking-tighter text-white whitespace-nowrap">
-                                        {service.prices 
-                                          ? service.prices[vehicleClass] === 0 
-                                            ? "Po dogovoru" 
-                                            : service.prices[vehicleClass] === -1 
-                                              ? "Na upit" 
-                                              : `${service.prices[vehicleClass]?.toLocaleString()} RSD` 
-                                          : service.price}
-                                      </span>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
+          <div className="bg-surface/20 rounded-[2.5rem] border border-white/5 overflow-hidden backdrop-blur-md">
+            <div className="w-full">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-white/5 border-b border-white/10">
+                    <th className="px-6 md:px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-primary">Usluga</th>
+                    <th className="px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-primary hidden md:table-cell">Opis</th>
+                    <th className="px-6 md:px-8 py-6 text-xs font-black uppercase tracking-[0.2em] text-primary text-right hidden md:table-cell">Cena</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {BUSINESS_CONFIG.serviceCategories.flatMap(cat => cat.services).map((service, sIdx) => (
+                    <tr 
+                      key={sIdx} 
+                      onClick={() => setSelectedService(service)}
+                      className="hover:bg-white/[0.05] cursor-pointer transition-all group"
+                    >
+                      <td className="px-6 md:px-8 py-6">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-base md:text-lg font-black text-white/90 group-hover:text-primary transition-colors tracking-tight leading-tight mb-1 truncate md:whitespace-normal">{service.name}</span>
+                            <div className="flex items-center gap-1.5 opacity-0 md:group-hover:opacity-100 transition-opacity">
+                              <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Saznaj više</span>
+                              <ArrowRight className="w-3 h-3 text-primary transition-transform group-hover:translate-x-1" />
+                            </div>
+                          </div>
+                          {/* Mobile Arrow Indicator */}
+                          <div className="md:hidden">
+                            <ChevronRight className="w-8 h-8 text-primary group-hover:translate-x-2 transition-transform" />
                           </div>
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
+                      </td>
+                      <td className="px-8 py-6 text-sm text-white/60 leading-relaxed max-w-xs hidden md:table-cell">{service.desc}</td>
+                      <td className="px-6 md:px-8 py-6 text-right hidden md:table-cell">
+                        <div className="flex flex-col items-end">
+                          <span className="text-xl md:text-2xl font-black tracking-tighter text-white whitespace-nowrap">
+                            {service.prices 
+                              ? service.prices[vehicleClass] === 0 
+                                ? "Po dogovoru" 
+                                : service.prices[vehicleClass] === -1 
+                                  ? "Na upit" 
+                                  : `${service.prices[vehicleClass]?.toLocaleString()} RSD` 
+                              : service.price}
+                          </span>
+                          {service.note && service.prices && (
+                            <span className="text-[10px] font-bold text-primary uppercase mt-1">
+                              {/* EUR labels removed */}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {/* Service Detail Modal */}
@@ -1404,7 +1372,8 @@ const Pricing = () => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-24 bg-secondary">
+    <section className="py-24 bg-secondary">
+      <div id="contact" className="scroll-mt-26"></div>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           <div>
@@ -1419,7 +1388,7 @@ const Contact = () => {
             <p className="text-white/70 text-lg mb-4 leading-relaxed">
               Popunite formular ili nas pozovite direktno — potvrđujemo vaš termin, dajemo tačno vreme dolaska i dolazimo spremni na posao.
             </p>
-            <p className="text-white/50 text-sm mb-12">Radimo na području Novog Sada i okoline. Po dogovoru / Zakazivanje obavezno.</p>
+            <p className="text-white/50 text-sm mb-12">Radimo na području Beograda i okoline. Po dogovoru / Zakazivanje obavezno.</p>
 
             <div className="space-y-8">
               <div className="space-y-4">
@@ -1460,7 +1429,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-xs font-bold tracking-widest uppercase text-white/60 mb-1">Instagram</p>
-                    <p className="text-lg font-black italic">paulin_detailing</p>
+                    <p className="text-lg font-black italic">autodetailing__dorcol</p>
                   </div>
                 </a>
               </div>
@@ -1528,13 +1497,10 @@ const Contact = () => {
                   className="w-full bg-secondary border border-white/10 rounded-xl px-4 py-4 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors appearance-none"
                 >
                   <option value="">Izaberite uslugu...</option>
-                  <option>Osnovni paket</option>
-                  <option>Premium paket</option>
-                  <option>Ekskluzivni paket</option>
-                  <option>Dubinsko pranje automobila</option>
-                  <option>Poliranje i keramika</option>
-                  <option>Zaštitne folije</option>
-                  <option>PDR udubljenja</option>
+                  <option>Standardno Pranje</option>
+                  <option>Dubinsko Pranje</option>
+                  <option>Poliranje i Zaštita</option>
+                  <option>Keramička Zaštita</option>
                   <option>Drugo</option>
                 </select>
               </div>
@@ -1586,7 +1552,8 @@ const FAQ = () => {
 
 
   return (
-    <section id="faq" className="py-24 bg-secondary">
+    <section className="py-24 bg-secondary">
+      <div id="faq" className="scroll-mt-26"></div>
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-6">
@@ -1678,7 +1645,7 @@ const Footer = () => {
                 <img 
                   src={BUSINESS_CONFIG.logo} 
                   alt={`${BUSINESS_CONFIG.name} Logo`} 
-                  className="h-10 w-auto object-contain" 
+                  className="h-12 md:h-16 w-auto object-contain" 
                 />
               </div>
             </div>
