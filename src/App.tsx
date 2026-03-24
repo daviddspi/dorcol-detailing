@@ -333,7 +333,7 @@ const Hero = () => {
         >
           <div className="flex items-center justify-center md:justify-start gap-2 mb-6 md:mb-8">
             <div className="h-0.5 w-8 bg-primary hidden md:block" />
-            <span className="text-primary font-black tracking-[0.4em] text-[10px] md:text-xs uppercase text-center md:text-left">Detailing studio Dorćol</span>
+            <span className="text-primary font-black tracking-[0.4em] text-xs md:text-xs uppercase text-center md:text-left">Detailing studio Dorćol</span>
             <div className="h-0.5 w-12 bg-primary hidden md:block" />
           </div>
           <h1 className="text-4xl md:text-[5.5rem] font-black leading-[0.85] mb-6 md:mb-8 tracking-tighter uppercase italic text-balance">
@@ -359,9 +359,9 @@ const Hero = () => {
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
                 <span className="text-sm font-black tracking-tight text-white">5.0</span>
-                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Google Rating</span>
+                <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Google Rating</span>
               </div>
-              <p className="text-[10px] font-black text-primary uppercase tracking-[0.15em] leading-tight">
+              <p className="text-xs font-black text-primary uppercase tracking-[0.15em] leading-tight">
                 27+ Verifikovanih recenzija
               </p>
             </div>
@@ -423,7 +423,7 @@ const Hero = () => {
         transition={{ repeat: Infinity, duration: 2 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 opacity-50"
       >
-        <span className="text-[10px] uppercase tracking-[0.5em] font-bold">Scroll</span>
+        <span className="text-xs uppercase tracking-[0.5em] font-bold">Scroll</span>
         <div className="w-px h-12 bg-gradient-to-b from-white to-transparent" />
       </motion.div>
     </section>
@@ -870,8 +870,8 @@ const BeforeAfterSlider = ({ before, after, label }: { before: string, after: st
       </div>
 
       {/* Labels */}
-      <div className="absolute top-4 left-4 bg-secondary/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white/90 z-10">Pre</div>
-      <div className="absolute top-4 right-4 bg-primary/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white z-10">Posle</div>
+      <div className="absolute top-4 left-4 bg-secondary/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest text-white/90 z-10">Pre</div>
+      <div className="absolute top-4 right-4 bg-primary/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest text-white z-10">Posle</div>
       
       {/* Info Overlay */}
       <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
@@ -987,7 +987,7 @@ const Testimonials = () => {
             <div className="h-1 w-12 bg-primary" />
           </div>
           <h2 className="text-5xl md:text-6xl font-black tracking-tighter uppercase italic mb-4">Šta kažu naši klijenti</h2>
-          <p className="text-white/60 text-[10px] md:text-sm font-bold uppercase tracking-widest flex flex-wrap items-center justify-center gap-y-2 gap-x-1">
+          <p className="text-white/60 text-xs md:text-sm font-bold uppercase tracking-widest flex flex-wrap items-center justify-center gap-y-2 gap-x-1">
             <span>Verifikovane Google recenzije</span>
             <span className="hidden md:inline">·</span>
             <span className="flex items-center gap-1">
@@ -1084,13 +1084,13 @@ const ServiceModal = ({ service, onClose, currentClass }: { service: any, onClos
           
           <div className="grid grid-cols-2 gap-4 mb-10">
             <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
-              <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest mb-1">Cena (Klasa {currentClass + 1})</p>
+              <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-1">Cena (Klasa {currentClass + 1})</p>
               <p className="text-2xl font-black text-white tracking-tighter">
                 {service.prices ? `${service.prices[currentClass]?.toLocaleString()} RSD` : service.price}
               </p>
             </div>
             <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
-              <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest mb-1">Trajanje</p>
+              <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-1">Trajanje</p>
               <p className="text-2xl font-black text-white tracking-tighter">{service.duration || "Po dogovoru"}</p>
             </div>
           </div>
@@ -1104,8 +1104,8 @@ const ServiceModal = ({ service, onClose, currentClass }: { service: any, onClos
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-white/5">
-                      <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary">Stavka</th>
-                      <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary text-right">Doplata / Cena</th>
+                      <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-primary">Stavka</th>
+                      <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-primary text-right">Doplata / Cena</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
@@ -1194,12 +1194,12 @@ const Pricing = () => {
               className={`relative p-8 h-fit rounded-3xl border transition-all duration-500 ${plan.recommended ? 'bg-primary border-primary text-white z-10 shadow-2xl shadow-primary/30' : 'bg-white/5 backdrop-blur-md border-white/10 hover:border-white/20 text-white'}`}
             >
               {plan.badge && (
-                <div className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-black tracking-[0.3em] px-4 py-1.5 rounded-full uppercase ${plan.recommended ? 'bg-white text-primary shadow-xl ring-4 ring-primary/20' : 'bg-primary text-white shadow-xl'}`}>
+                <div className={`absolute -top-4 left-1/2 -translate-x-1/2 text-xs font-black tracking-[0.3em] px-4 py-1.5 rounded-full uppercase ${plan.recommended ? 'bg-white text-primary shadow-xl ring-4 ring-primary/20' : 'bg-primary text-white shadow-xl'}`}>
                   {plan.badge}
                 </div>
               )}
               <h3 className="text-2xl font-black uppercase italic mb-1 tracking-tight">{plan.title}</h3>
-              <p className={`text-[10px] font-bold uppercase tracking-widest mb-4 flex items-center gap-2 ${plan.recommended ? 'text-white/60' : 'text-white/50'}`}>
+              <p className={`text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2 ${plan.recommended ? 'text-white/60' : 'text-white/50'}`}>
                 <Clock className="w-3 h-3" /> {plan.duration}
               </p>
               
@@ -1293,7 +1293,7 @@ const Pricing = () => {
                 </button>
               ))}
             </div>
-            <p className="mt-6 text-white/50 text-[10px] font-bold uppercase tracking-[0.2em]">Odaberite klasu vašeg vozila za tačan prikaz cena</p>
+            <p className="mt-6 text-white/50 text-xs font-bold uppercase tracking-[0.2em]">Odaberite klasu vašeg vozila za tačan prikaz cena</p>
           </div>
 
           <div className="bg-surface/20 rounded-[2.5rem] border border-white/5 overflow-hidden backdrop-blur-md">
@@ -1316,15 +1316,27 @@ const Pricing = () => {
                       <td className="px-6 md:px-8 py-6">
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex flex-col min-w-0">
-                            <span className="text-base md:text-lg font-black text-white/90 group-hover:text-primary transition-colors tracking-tight leading-tight mb-1 truncate md:whitespace-normal">{service.name}</span>
+                            <span className="text-base md:text-xl font-black text-white/90 group-hover:text-primary transition-colors tracking-tight leading-tight mb-1 truncate md:whitespace-normal">{service.name}</span>
+                            {/* Mobile Price Indicator */}
+                            <div className="md:hidden mt-1">
+                              <span className="text-[15px] font-black text-primary tracking-tighter uppercase italic">
+                                {service.prices 
+                                  ? service.prices[vehicleClass] === 0 
+                                    ? "Po dogovoru" 
+                                    : service.prices[vehicleClass] === -1 
+                                      ? "Na upit" 
+                                      : `${service.prices[vehicleClass]?.toLocaleString()} RSD` 
+                                  : service.price}
+                              </span>
+                            </div>
                             <div className="flex items-center gap-1.5 opacity-0 md:group-hover:opacity-100 transition-opacity">
-                              <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Saznaj više</span>
+                              <span className="text-primary text-xs font-black uppercase tracking-[0.2em]">Saznaj više</span>
                               <ArrowRight className="w-3 h-3 text-primary transition-transform group-hover:translate-x-1" />
                             </div>
                           </div>
                           {/* Mobile Arrow Indicator */}
                           <div className="md:hidden">
-                            <ChevronRight className="w-8 h-8 text-primary group-hover:translate-x-2 transition-transform" />
+                            <ArrowRight className="w-6 h-6 text-primary group-hover:translate-x-2 transition-transform" />
                           </div>
                         </div>
                       </td>
@@ -1341,7 +1353,7 @@ const Pricing = () => {
                               : service.price}
                           </span>
                           {service.note && service.prices && (
-                            <span className="text-[10px] font-bold text-primary uppercase mt-1">
+                            <span className="text-xs font-bold text-primary uppercase mt-1">
                               {/* EUR labels removed */}
                             </span>
                           )}
@@ -1462,7 +1474,7 @@ const Contact = () => {
             <form className="space-y-6" noValidate aria-label="Forma za zakaz">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="contact-name" className="text-[10px] font-black uppercase tracking-widest text-white/60">
+                  <label htmlFor="contact-name" className="text-xs font-black uppercase tracking-widest text-white/60">
                     Ime i prezime <span aria-label="obavezno" className="text-primary">*</span>
                   </label>
                   <input
@@ -1475,7 +1487,7 @@ const Contact = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="contact-email" className="text-[10px] font-black uppercase tracking-widest text-white/60">
+                  <label htmlFor="contact-email" className="text-xs font-black uppercase tracking-widest text-white/60">
                     Email <span aria-label="obavezno" className="text-primary">*</span>
                   </label>
                   <input
@@ -1490,7 +1502,7 @@ const Contact = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <label htmlFor="contact-service" className="text-[10px] font-black uppercase tracking-widest text-white/60">Usluga koja te zanima</label>
+                <label htmlFor="contact-service" className="text-xs font-black uppercase tracking-widest text-white/60">Usluga koja te zanima</label>
                 <select
                   id="contact-service"
                   autoComplete="off"
@@ -1505,7 +1517,7 @@ const Contact = () => {
                 </select>
               </div>
               <div className="space-y-2">
-                <label htmlFor="contact-message" className="text-[10px] font-black uppercase tracking-widest text-white/60">Vaše vozilo i napomene</label>
+                <label htmlFor="contact-message" className="text-xs font-black uppercase tracking-widest text-white/60">Vaše vozilo i napomene</label>
                 <textarea
                   id="contact-message"
                   rows={3}
@@ -1536,7 +1548,7 @@ const Contact = () => {
                 Pošalji WhatsApp
               </a>
 
-              <p className="text-white/20 text-[10px] text-center uppercase tracking-widest mt-6">Odgovaramo u roku od sat vremena · Bez obaveza</p>
+              <p className="text-white/20 text-xs text-center uppercase tracking-widest mt-6">Odgovaramo u roku od sat vremena · Bez obaveza</p>
             </form>
           </div>
         </div>
@@ -1619,7 +1631,7 @@ const MobileStickyBar = () => (
       <a
         key={idx}
         href={`tel:${phone}`}
-        className="flex-1 bg-surface border border-white/10 text-white py-3 rounded-lg font-black tracking-tighter uppercase text-[10px] text-center flex flex-col items-center justify-center active:scale-95 transition-transform"
+        className="flex-1 bg-surface border border-white/10 text-white py-3 rounded-lg font-black tracking-tighter uppercase text-sm text-center flex flex-col items-center justify-center active:scale-95 transition-transform"
         aria-label={`Pozovi ${idx + 1}`}
       >
         <Phone className="w-4 h-4 mb-1" aria-hidden="true" /> {phone}
@@ -1693,12 +1705,12 @@ const Footer = () => {
         </div>
 
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-white/20 text-[10px] font-bold tracking-[0.3em] uppercase">
+          <p className="text-white/20 text-xs font-bold tracking-[0.3em] uppercase">
             © {new Date().getFullYear()} {BUSINESS_CONFIG.name}. SVA PRAVA ZADRŽANA.
           </p>
           <div className="flex gap-8">
-            <a href="#" className="text-white/20 hover:text-white transition-colors text-[10px] font-bold tracking-[0.3em] uppercase">Politika privatnosti</a>
-            <a href="#" className="text-white/20 hover:text-white transition-colors text-[10px] font-bold tracking-[0.3em] uppercase">Uslovi korišćenja</a>
+            <a href="#" className="text-white/20 hover:text-white transition-colors text-xs font-bold tracking-[0.3em] uppercase">Politika privatnosti</a>
+            <a href="#" className="text-white/20 hover:text-white transition-colors text-xs font-bold tracking-[0.3em] uppercase">Uslovi korišćenja</a>
           </div>
         </div>
       </div>
