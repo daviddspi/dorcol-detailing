@@ -329,7 +329,7 @@ const Hero = () => {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto md:mx-0 text-center md:text-left flex flex-col items-center md:items-start"
+          className="max-w-4xl mx-auto md:mx-0 text-center md:text-left flex flex-col items-center md:items-start min-h-[50vh] md:min-h-0"
         >
           <div className="flex items-center justify-center md:justify-start gap-2 mb-6 md:mb-8">
             <div className="h-0.5 w-8 bg-primary hidden md:block" />
@@ -367,7 +367,7 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-6 w-full md:w-auto mb-12 md:mb-0">
+          <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 md:gap-6 w-full md:w-auto mb-12 md:mb-0 mt-auto md:mt-0">
             <motion.a 
               href="#contact"
               style={{ x: magneticX, y: magneticY }}
