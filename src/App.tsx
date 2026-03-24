@@ -324,12 +324,12 @@ const Hero = () => {
       </div>
 
       {/* Hero copy */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-32 md:pt-40 -translate-y-6 md:translate-y-0 text-center md:text-left">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full h-[85vh] md:h-auto flex flex-col pt-32 md:pt-40 text-center md:text-left">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto md:mx-0 text-center md:text-left flex flex-col items-center md:items-start min-h-[50vh] md:min-h-0"
+          className="max-w-4xl mx-auto md:mx-0 text-center md:text-left flex flex-col items-center md:items-start h-full md:h-auto"
         >
           <div className="flex items-center justify-center md:justify-start gap-2 mb-6 md:mb-8">
             <div className="h-0.5 w-8 bg-primary hidden md:block" />
