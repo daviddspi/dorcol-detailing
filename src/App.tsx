@@ -1320,15 +1320,9 @@ const Pricing = () => {
                             {/* Debug Log */}
                             {console.log(`Rendering service: ${service.name}`, service.prices, vehicleClass)}
                             {/* Mobile Price Indicator */}
-                            <div className="md:hidden mt-1">
-                              <span className="text-[15px] font-black text-primary tracking-tighter uppercase italic">
-                                {service.prices 
-                                  ? service.prices[vehicleClass] === 0 
-                                    ? "Po dogovoru" 
-                                    : service.prices[vehicleClass] === -1 
-                                      ? "Na upit" 
-                                      : `${service.prices[vehicleClass]?.toLocaleString()} RSD` 
-                                  : service.price}
+                            <div className="mt-1">
+                              <span className="text-[15px] font-bold text-primary italic">
+                                {service.prices ? service.prices[vehicleClass] + " RSD" : service.price}
                               </span>
                             </div>
                             <div className="flex items-center gap-1.5 opacity-0 md:group-hover:opacity-100 transition-opacity">
