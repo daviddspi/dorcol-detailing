@@ -1317,6 +1317,8 @@ const Pricing = () => {
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex flex-col min-w-0">
                             <span className="text-base md:text-xl font-black text-white/90 group-hover:text-primary transition-colors tracking-tight leading-tight mb-1 truncate md:whitespace-normal">{service.name}</span>
+                            {/* Debug Log */}
+                            {console.log(`Rendering service: ${service.name}`, service.prices, vehicleClass)}
                             {/* Mobile Price Indicator */}
                             <div className="md:hidden mt-1">
                               <span className="text-[15px] font-black text-primary tracking-tighter uppercase italic">
