@@ -57,7 +57,7 @@ export const BUSINESS_CONFIG: BusinessConfig = {
   name: "Auto Detailing Dorćol",
   logo: "/logo.svg",
   slug: "dorcol-detailing",
-  tagline: "Vrhunski Detailing za Vaš Automobil u Srcu Beograda. DEPLOY TEST",
+  tagline: "Vrhunski Detailing za Vaš Automobil u Srcu Beograda.",
   shortDescription: "Specijalizovan studio na Dorćolu za kompletnu negu: od premium pranja i dubinskog čišćenja, do poliranja i vrhunske keramičke zaštite.",
   longDescription: "Smešten u Jevrejskoj 12 na Dorćolu, naš studio pruža beskompromisni kvalitet u svetu auto-detailinga. Naš pristup podrazumeva upotrebu najsavremenijih tehnologija i materijala, uz strogu pažnju na svaki milimetar vašeg vozila. Bez obzira na to da li je reč o osvežavanju enterijera ili potpunoj restauraciji sjaja karoserije, garantujemo rezultat koji nadilazi očekivanja.",
   philosophy: {

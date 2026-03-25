@@ -1316,15 +1316,19 @@ const Pricing = () => {
                       <td className="px-6 md:px-8 py-6">
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex flex-col min-w-0">
-                            <span className="text-base md:text-xl font-black text-white/90 group-hover:text-primary transition-colors tracking-tight leading-tight mb-1 truncate md:whitespace-normal">{service.name}</span>
-                            {/* Debug Log */}
-                            {console.log(`Rendering service: ${service.name}`, service.prices, vehicleClass)}
-                            {/* Mobile Price Indicator */}
-                            <div className="mt-1">
-                              <span className="text-[15px] font-bold text-primary italic">
-                                {service.prices ? service.prices[vehicleClass] + " RSD" : service.price}
-                              </span>
-                            </div>
+                             <span className="text-base md:text-xl font-black text-white/90 group-hover:text-primary transition-colors tracking-tight leading-tight mb-1 truncate md:whitespace-normal">{service.name}</span>
+                             {/* Mobile Price Indicator */}
+                             <div className="md:hidden mt-1">
+                               <span className="text-[15px] font-black text-primary tracking-tighter uppercase italic">
+                                 {service.prices 
+                                   ? service.prices[vehicleClass] === 0 
+                                     ? "Po dogovoru" 
+                                     : service.prices[vehicleClass] === -1 
+                                       ? "Na upit" 
+                                       : `${service.prices[vehicleClass]?.toLocaleString()} RSD` 
+                                   : service.price}
+                               </span>
+                             </div>
                             <div className="flex items-center gap-1.5 opacity-0 md:group-hover:opacity-100 transition-opacity">
                               <span className="text-primary text-xs font-black uppercase tracking-[0.2em]">Saznaj više</span>
                               <ArrowRight className="w-3 h-3 text-primary transition-transform group-hover:translate-x-1" />
