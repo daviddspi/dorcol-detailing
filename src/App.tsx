@@ -1320,13 +1320,11 @@ const Pricing = () => {
                              {/* Mobile Price Indicator */}
                              <div className="md:hidden mt-1">
                                <span className="text-[15px] font-black text-primary tracking-tighter uppercase italic">
-                                 {service.prices 
-                                   ? service.prices[vehicleClass] === 0 
-                                     ? "Po dogovoru" 
-                                     : service.prices[vehicleClass] === -1 
-                                       ? "Na upit" 
-                                       : `${service.prices[vehicleClass]?.toLocaleString()} RSD` 
-                                   : service.price}
+                                {service.prices 
+                                  ? (service.prices[vehicleClass] || service.prices[0] || 0) > 0 
+                                    ? `${(service.prices[vehicleClass] || service.prices[0]).toLocaleString()} RSD` 
+                                    : "Na upit"
+                                  : service.price}
                                </span>
                              </div>
                             <div className="flex items-center gap-1.5 opacity-0 md:group-hover:opacity-100 transition-opacity">
